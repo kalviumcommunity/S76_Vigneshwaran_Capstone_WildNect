@@ -1,7 +1,8 @@
+const mongoose = require("mongoose");
 const LeaderboardSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   score: Number,
   rank: Number,
-  week: Date, 
+  week: Date,
 });
 module.exports = LeaderboardSchema;
