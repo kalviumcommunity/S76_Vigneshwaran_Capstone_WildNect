@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="flex flex-col items-center justify-center h-screen text-center bg-gradient-to-br from-green-100 to-blue-100 p-6">
       <h1 className="text-4xl font-bold mb-4">🌿 Welcome to Wild Nect</h1>
-
+   
       {!submitted ? (
         <>
           <p className="text-lg mb-2">Enter your explorer name to begin:</p>
