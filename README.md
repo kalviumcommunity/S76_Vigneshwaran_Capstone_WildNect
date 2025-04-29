@@ -193,3 +193,5 @@ Here’s a detailed **30-day plan** for your capstone journey with **WildNect**,
 
 
 
+## Backend Deployment link:
+https://wildnect.onrender.com 
