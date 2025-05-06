@@ -31,7 +31,7 @@ async function getSpeciesDetails(scientificName) {
   }
 }
 
-router.get("/random", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const gbifUrl =
       "https://api.gbif.org/v1/species/search?rank=species&kingdom=Animalia&class=Mammalia,Aves&limit=1000&offset=0";
