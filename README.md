@@ -194,7 +194,7 @@ Here’s a detailed **30-day plan** for your capstone journey with **WildNect**,
 
 
 ## Backend Deployment link:
-https://wildnect.onrender.com 
+https://wildnect.onrender.com/species
 
 ## Frontend Deployment link:
 https://wildlifenect.netlify.app/
