@@ -22,4 +22,4 @@ const SpeciesSchema = new mongoose.Schema({
   isVerified: { type: Boolean, default: false },
 });
 
-module.exports = SpeciesSchema;
+module.exports = mongoose.model("Species", SpeciesSchema);
