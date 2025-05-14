@@ -6,4 +6,4 @@ const ChatSchema = new mongoose.Schema({
   room: { type: String, default: "global" },
 });
 
-module.exports = ChatSchema;
+module.exports = mongoose.model("Chat", ChatSchema);

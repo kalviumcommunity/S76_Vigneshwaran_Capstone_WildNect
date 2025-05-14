@@ -5,4 +5,4 @@ const LeaderboardSchema = new mongoose.Schema({
   rank: Number,
   week: Date,
 });
-module.exports = LeaderboardSchema;
+module.exports = mongoose.model("Leaderboard", LeaderboardSchema);
