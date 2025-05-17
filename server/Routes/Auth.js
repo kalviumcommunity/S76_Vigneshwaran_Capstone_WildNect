@@ -1,9 +1,10 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const User = require("../models/UserSchema");
-
+const verifyToken = require("../middleware/verifyToken");
 const router = express.Router();
-
+const JWT_SECRET = process.env.JWT_SECRET || "yourSecretKey";
 // 🔐 Sign Up
 router.post("/signup", async (req, res) => {
   try {
@@ -25,10 +26,17 @@ router.post("/signup", async (req, res) => {
     });
 
     await user.save();
-    req.session.user = user; // store in session
 
+    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "7d" });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // use https in prod
+      sameSite: "Lax", // or 'None' with secure=true
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
     res.status(201).json({
       msg: "User registered",
+      token,
       user: {
         username: user.username,
         email: user.email,
@@ -57,11 +65,18 @@ router.post("/login", async (req, res) => {
        
         return res.status(400).json({ msg: "Invalid credentials" });
     } 
-
-    req.session.user = user; // store in session
+    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "7d" });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // use https in prod
+      sameSite: "Lax", // or 'None' with secure=true
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+   
 
     res.status(200).json({
       msg: "Login successful",
+      token,
       user: {
         username: user.username,
         email: user.email,
@@ -75,20 +90,22 @@ router.post("/login", async (req, res) => {
 });
 
 // 👤 Get Current User from Session
-router.get("/me", (req, res) => {
-  if (req.session.user) {
-    res.status(200).json({ user: req.session.user });
-  } else {
-    res.status(401).json({ msg: "Not authenticated" });
-  }
+router.get("/me", verifyToken, async (req, res) => {
+  const user = await User.findById(req.userId).select("-password");
+  if (!user) return res.status(404).json({ msg: "User not found" });
+  res.status(200).json({ user });
+  
 });
 
 // 🔓 Logout
 router.post("/logout", (req, res) => {
-  req.session.destroy(() => {
-    res.clearCookie("connect.sid");
-    res.status(200).json({ msg: "Logged out" });
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "Lax",
   });
+
+  res.status(200).json({ msg: "Logout successful" });
 });
 
 module.exports = router;
