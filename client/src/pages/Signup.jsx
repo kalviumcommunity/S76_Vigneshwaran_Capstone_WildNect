@@ -19,7 +19,7 @@ const SignUP = () => {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 const handleSignup=async()=>{
-  e.preventDefault();
+  // e.preventDefault();
   try{
     const res=await axios.post('http://localhost:5000/auth/signup',formData ,{withCredentials:true})
 
