@@ -9,6 +9,7 @@ const Dashboard = () => {
   // Fetch logged-in user from session
   const fetchUser = async () => {
     try {
+
       // const token = localStorage.getItem("token"); 
       // if (!token) throw new Error("No token found");
 
@@ -34,6 +35,7 @@ const Dashboard = () => {
   };
   
 
+
   // Logout handler
   const handleLogout = async () => {
     try {
@@ -41,7 +43,9 @@ const Dashboard = () => {
         "http://localhost:5000/auth/logout",
         {},
         {
+
           // withCredentials: true,
+
         }
       );
       setUser(null);

@@ -3,12 +3,14 @@ import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 import nature from "../assets/images/nature.gif";
 import butterfly from "../assets/images/butterfly.gif";
+
 import { useNavigate,useLocation } from "react-router-dom";
 // import GoogleAuthButton from "../components/GoogleAuthButton";
 
 const Login = () => {
   const location = useLocation();
   // const isLogin = location.pathname === "/login";
+
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => setShowPassword((prev) => !prev);
   const navigate = useNavigate();
@@ -33,11 +35,13 @@ const Login = () => {
         { withCredentials: true }
       );
       console.log("Login success:", res.data);
+
       
       navigate("/dashboard");
 // if (res.data.token) {
 //   // localStorage.setItem("token", res.data.token); // <-- Store it here
 // }// redirect to dashboard
+
     } catch (err) {
       console.error("Login error:", err.response?.data?.error || err.message);
       alert("Login failed: " + (err.response?.data?.error || "Unknown error"));
@@ -133,6 +137,7 @@ const Login = () => {
           </p>
         </div>
         {/* // <GoogleAuthButton isLogin={isLogin} /> */}
+
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
 const cookie = require("cookie-parser");
 const User = require("../models/UserSchema");
 // const verifyToken = require("../middleware/verifyToken");
@@ -75,11 +76,13 @@ router.post("/login", async (req, res) => {
 
     const user = await User.findOne({
       $or: [{ email }, { username }],
+
     });
 
     if (!user) return res.status(400).json({ msg: "User not found" });
 
     const isMatch = await bcrypt.compare(password, user.password);
+
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
     // const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "7d" });
@@ -94,6 +97,7 @@ router.post("/login", async (req, res) => {
     res.status(200).json({
       msg: "Login successful",
       // token,
+
       user: {
         username: user.username,
         email: user.email,
@@ -105,6 +109,7 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 
 // router.post("/google", async (req, res) => {
@@ -183,10 +188,12 @@ router.get("/me", async (req, res) => {
 
 router.post("/logout", (req, res) => {
   res.clearCookie("user", {
+
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "Lax",
   });
+
   res.status(200).json({ msg: "Logout successful" });
 });
 
