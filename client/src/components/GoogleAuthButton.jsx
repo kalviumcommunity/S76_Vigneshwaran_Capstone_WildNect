@@ -1,37 +1,45 @@
-// src/components/GoogleAuthButton.jsx
-import { auth, provider } from "../firebase";
-import { signInWithPopup } from "firebase/auth";
-import { useState } from "react";
+// // src/components/GoogleAuthButton.jsx
+// import { auth, provider } from "../firebase";
+// import { signInWithPopup } from "firebase/auth";
+// import { useState } from "react";
+// import axios from "axios";
+// import { useNavigate } from "react-router-dom";
+// export default function GoogleAuthButton({isLogin}) {
+//   const [user, setUser] = useState(null);
+//   const navigate = useNavigate();
 
-export default function GoogleAuthButton() {
-  const [user, setUser] = useState(null);
+//   const handleSignUp = async () => {
+//     try {
+//       const result = await signInWithPopup(auth, provider);
+//       const idToken = await result.user.getIdToken();
 
-  const handleSignUp = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      setUser(user);
-      console.log("User Info:", user);
-    } catch (error) {
-      console.error("Google Sign-Up Error:", error.message);
-    }
-  };
+//       // Send ID token to backend
+//       const res = await axios.post(
+//         "http://localhost:5000/auth/google",
+//         { idToken },
+//         { withCredentials: true }
+//       );
+//       localStorage.setItem("token", res.data.token);
+//       setUser(res.data.user);
+//       console.log("Logged in via Google:", res.data.user);
+//       navigate("/dashboard");
+//     } catch (error) {
+//       console.error("Google Sign-Up Error:", error.message);
+//     }
+//   };
 
-  return (
-    <div className="flex flex-col items-center mt-3">
-      <button
-        onClick={handleSignUp}
-        className="bg-white text-green-600 border border-green-600 px-4 py-2 rounded-lg shadow hover:bg-green-500 hover:text-white transition-all flex gap-1"
-      >
-        <img src="/src/assets/images/Google__G__logo.svg.webp" alt="google_logo" className="w-6 h-6" />
-        Sign Up with Google
-      </button>
-      {user && (
-        <div className="mt-4 text-sm text-gray-700">
-          <p>Welcome, {user.displayName}</p>
-          <p>Email: {user.email}</p>
-        </div>
-      )}
-    </div>
-  );
-}
+//   return (
+//     <div className="flex flex-col items-center mt-3">
+//       <button
+//         onClick={handleSignUp}
+//         className="bg-blue-600 text-white border border-green-600 px-4 py-2 rounded-lg shadow hover:bg-white hover:text-green-700 transition-all flex gap-1"
+//       >
+//         <img src="/src/assets/images/Google__G__logo.svg.webp" alt="google_logo" className="w-6 h-6" />
+       
+
+//         {isLogin?"Sign In with Google":"Sign Up with Google"}
+        
+//       </button>
+//     </div>
+//   );
+// }

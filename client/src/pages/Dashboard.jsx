@@ -9,15 +9,30 @@ const Dashboard = () => {
   // Fetch logged-in user from session
   const fetchUser = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/auth/me", {
+      // const token = localStorage.getItem("token"); 
+      // if (!token) throw new Error("No token found");
+
+      const res = await axios.get("http://localhost:5000/auth/me" ,
+        {
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        //   "Content-Type": "application/json",
+        // },
         withCredentials: true,
-      });
+      }
+    );
+
       setUser(res.data.user);
     } catch (err) {
-      console.error("Not authenticated:", err.response?.data?.msg);
-      navigate("/login"); // redirect if not authenticated
+      console.log(err)
+      console.error(
+        "Not authenticated:",
+        err.response?.data?.msg || err.message
+      );
+      navigate("/login");
     }
   };
+  
 
   // Logout handler
   const handleLogout = async () => {
@@ -26,7 +41,7 @@ const Dashboard = () => {
         "http://localhost:5000/auth/logout",
         {},
         {
-          withCredentials: true,
+          // withCredentials: true,
         }
       );
       setUser(null);

@@ -24,7 +24,11 @@ const handleSignup=async()=>{
     const res=await axios.post('http://localhost:5000/auth/signup',formData ,{withCredentials:true})
 
     console.log(res.data)
-    navigate('/dashboard')
+    navigate("/dashboard");
+   
+// if (res.data.token) {
+//   // localStorage.setItem("token", res.data.token); // <-- Store it here
+// }
 
   }catch(err){
     alert(err.response.data.msg)
