@@ -6,8 +6,12 @@ const auth =require("./Routes/Auth");
 const cors =require('cors')
 const app = express();
 
-app.use(express.json());
+const cookie = require("cookie-parser");
 
+app.use(express.json());
+app.use(cookie()); 
+
+connection();
 app.use(
   cors({
     origin: "http://localhost:5173", // frontend URL
@@ -17,7 +21,6 @@ app.use(
  
 app.use("/species",species)
 app.use("/auth",auth)
-connection();
 const port =process.env.PORT || 5000
 app.listen(port,()=>{
     console.log(`Server is running on http://localhost:${port}` )
